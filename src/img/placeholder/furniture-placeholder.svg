@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="Furniture placeholder">
+  <rect width="800" height="520" fill="#f4efe8" />
+  <rect x="96" y="110" width="608" height="300" rx="28" fill="#e6ddd2" />
+  <rect x="168" y="224" width="464" height="112" rx="18" fill="#d7cab9" />
+  <rect x="144" y="188" width="72" height="148" rx="28" fill="#d7cab9" />
+  <rect x="584" y="188" width="72" height="148" rx="28" fill="#d7cab9" />
+  <rect x="140" y="332" width="16" height="76" rx="8" fill="#6b5f57" />
+  <rect x="644" y="332" width="16" height="76" rx="8" fill="#6b5f57" />
+  <rect x="254" y="210" width="92" height="62" rx="16" fill="#efe7dc" />
+  <rect x="454" y="210" width="92" height="62" rx="16" fill="#efe7dc" />
+  <path d="M0 462h800v58H0z" fill="#ddd3c8" />
+</svg>

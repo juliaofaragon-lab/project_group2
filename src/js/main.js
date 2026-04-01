@@ -14,7 +14,6 @@ import { initHeader } from './header/header.js';
 import { initSmoothScroll } from './helpers/smooth-scroll.js';
 import { initHero } from './hero/hero.js';
 import { initFurnitureModal } from './modals/furniture-modal.js';
-import { initOrderModal } from './modals/order-modal.js';
 
 function initApp() {
   initHeader();
@@ -26,7 +25,6 @@ function initApp() {
   initFaq();
   initFeedback();
   initFurnitureModal();
-  initOrderModal();
   initSmoothScroll();
 }
 

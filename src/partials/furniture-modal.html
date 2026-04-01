@@ -1,17 +1,70 @@
 <div class="backdrop modal-backdrop js-furniture-modal" hidden>
-  <div class="modal furniture-modal">
+  <div
+    class="modal furniture-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="furniture-modal-title"
+  >
     <button
-      class="modal__close"
+      class="modal__close furniture-modal__close"
       type="button"
       data-close-furniture-modal
       aria-label="Закрити модальне вікно"
     >
-      ✕
+      <span aria-hidden="true">&times;</span>
     </button>
 
-    <div class="furniture-modal__gallery"><!-- Gallery / slider --></div>
-    <div class="furniture-modal__content"><!-- Furniture details --></div>
+    <div class="furniture-modal__layout">
+      <div class="furniture-modal__gallery">
+        <div class="furniture-modal__main-image-wrap">
+          <img
+            class="furniture-modal__main-image js-furniture-modal-main-image"
+            src=""
+            alt="Фото товару"
+          />
+        </div>
 
-    <button class="button" type="button" data-open-order-modal>Перейти до замовлення</button>
+        <ul class="furniture-modal__thumbs js-furniture-modal-thumbs"></ul>
+      </div>
+
+      <div class="furniture-modal__content">
+        <div class="furniture-modal__heading">
+          <h2 class="furniture-modal__title" id="furniture-modal-title">Товар</h2>
+          <p class="furniture-modal__category js-furniture-modal-category">Категорія</p>
+        </div>
+
+        <p class="furniture-modal__price js-furniture-modal-price">Ціна уточнюється</p>
+
+        <div class="furniture-modal__rating" aria-label="Рейтинг товару">
+          <div class="furniture-modal__stars js-furniture-modal-stars"></div>
+          <p class="furniture-modal__rating-value js-furniture-modal-rating-value"></p>
+        </div>
+
+        <div class="furniture-modal__option">
+          <p class="furniture-modal__label">Колір</p>
+          <ul
+            class="furniture-modal__colors js-furniture-modal-colors"
+            aria-label="Доступні кольори"
+          ></ul>
+        </div>
+
+        <p class="furniture-modal__description js-furniture-modal-description">
+          Опис товару з'явиться після завантаження даних.
+        </p>
+
+        <p class="furniture-modal__sizes js-furniture-modal-sizes">Розміри уточнюються</p>
+
+        <p class="furniture-modal__state js-furniture-modal-state" hidden></p>
+
+        <button
+          class="button furniture-modal__action js-furniture-modal-order-button"
+          type="button"
+          data-open-order-modal
+          disabled
+        >
+          Перейти до замовлення
+        </button>
+      </div>
+    </div>
   </div>
 </div>
