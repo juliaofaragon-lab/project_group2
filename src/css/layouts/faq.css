@@ -1,0 +1,11 @@
+.accordion-container {
+  display: grid;
+  gap: 16px;
+}
+
+.accordion-container:empty {
+  min-height: 240px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}

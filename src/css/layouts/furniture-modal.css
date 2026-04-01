@@ -1,0 +1,12 @@
+.furniture-modal {
+  display: grid;
+  gap: 24px;
+}
+
+.furniture-modal__gallery,
+.furniture-modal__content {
+  min-height: 220px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}

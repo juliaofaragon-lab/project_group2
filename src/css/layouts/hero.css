@@ -1,0 +1,45 @@
+.hero {
+  background:
+    radial-gradient(circle at top left, rgba(29, 78, 216, 0.08), transparent 35%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.hero__container {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+  min-height: 520px;
+}
+
+.hero__content {
+  display: grid;
+  gap: 16px;
+}
+
+.hero__label {
+  min-height: 20px;
+}
+
+.hero__title {
+  min-height: 88px;
+  color: var(--color-title);
+  font-size: 40px;
+  line-height: 1.1;
+}
+
+.hero__text {
+  min-height: 72px;
+}
+
+.hero__media {
+  min-height: 280px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+}
+
+@media (min-width: 768px) {
+  .hero__container {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
