@@ -299,7 +299,8 @@ function renderColors() {
           >
             <input
               class="visually-hidden furniture-modal__color-input"
-              type="checkbox"
+              type="radio"
+              name="furniture-modal-color"
               data-modal-color="${index}"
               ${index === state.activeColorIndex ? 'checked' : ''}
             />
