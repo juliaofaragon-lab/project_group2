@@ -1,0 +1,35 @@
+<div class="backdrop modal-backdrop js-order-modal" hidden>
+  <div class="modal order-modal">
+    <button
+      class="modal__close"
+      type="button"
+      data-close-order-modal
+      aria-label="Закрити модальне вікно"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="section-head order-modal__head">
+      <h2 class="section-title">Замовити зворотний зв'язок</h2>
+    </div>
+
+    <form class="order-form js-order-form">
+      <label class="order-form__field">
+        <span class="order-form__label">Ім'я</span>
+        <input class="order-form__input" type="text" name="name" required />
+      </label>
+
+      <label class="order-form__field">
+        <span class="order-form__label">Телефон</span>
+        <input class="order-form__input" type="tel" name="phone" required />
+      </label>
+
+      <label class="order-form__field">
+        <span class="order-form__label">Коментар</span>
+        <textarea class="order-form__textarea" name="comment" rows="5"></textarea>
+      </label>
+
+      <button class="button order-form__submit" type="submit">Надіслати заявку</button>
+    </form>
+  </div>
+</div>
