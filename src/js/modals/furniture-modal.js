@@ -203,7 +203,9 @@ function normalizeColors(item) {
     ? item.colors
     : Array.isArray(item.colorOptions)
       ? item.colorOptions
-      : item.color
+      : Array.isArray(item.color)
+        ? item.color
+        : item.color
         ? [item.color]
         : [];
 
@@ -231,6 +233,19 @@ function normalizeFurnitureItem(item = {}) {
     rating: normalizeRating(item.rate ?? item.rating ?? item.stars),
     sizes: formatDimensions(item.sizes ?? item.size ?? item.dimensions),
   };
+}
+
+function syncOrderActionButton() {
+  const { actionButton } = getModalElements();
+
+  if (!actionButton || !state.item) {
+    return;
+  }
+
+  delete actionButton.dataset.orderModelId;
+  delete actionButton.dataset.orderModelName;
+  delete actionButton.dataset.orderColor;
+  actionButton.disabled = true;
 }
 
 function renderStars(rating) {
@@ -305,7 +320,7 @@ function renderColors() {
               ${index === state.activeColorIndex ? 'checked' : ''}
             />
             <span
-              class="furniture-modal__color-swatch"
+              class="furniture-modal__color-swatch ${isLightSwatch(color.value) ? 'is-light' : ''}"
               style="--swatch-color: ${color.value}"
               aria-hidden="true"
             ></span>
@@ -314,6 +329,14 @@ function renderColors() {
       `
     )
     .join('');
+
+  syncOrderActionButton();
+}
+
+function isLightSwatch(value = '') {
+  const normalizedValue = String(value).trim().toLowerCase();
+
+  return normalizedValue === '#fff' || normalizedValue === '#ffffff';
 }
 
 function renderStateMessage(message = '', type = 'info') {
@@ -358,9 +381,10 @@ function renderFurnitureInfo() {
   price.textContent = state.item.price;
   stars.innerHTML = renderStars(state.item.rating);
   ratingValue.textContent = '';
+  ratingValue.hidden = true;
   description.textContent = state.item.description;
   sizes.textContent = state.item.sizes;
-  actionButton.disabled = false;
+  actionButton.disabled = true;
 
   renderMainImage();
   renderThumbs();
@@ -410,6 +434,7 @@ function resetFurnitureModal() {
 
   if (ratingValue) {
     ratingValue.textContent = '';
+    ratingValue.hidden = true;
   }
 
   if (description) {
@@ -435,6 +460,9 @@ function resetFurnitureModal() {
   }
 
   if (actionButton) {
+    delete actionButton.dataset.orderColor;
+    delete actionButton.dataset.orderModelId;
+    delete actionButton.dataset.orderModelName;
     actionButton.disabled = true;
   }
 }
@@ -511,7 +539,6 @@ export function initFurnitureModal() {
   document.addEventListener('click', async (event) => {
     const openButton = event.target.closest('[data-open-furniture-modal]');
     const closeButton = event.target.closest('[data-close-furniture-modal]');
-    const orderButton = event.target.closest('[data-open-order-modal]');
     const thumbButton = event.target.closest('[data-modal-thumb]');
 
     if (openButton) {
@@ -530,10 +557,6 @@ export function initFurnitureModal() {
       renderMainImage();
       renderThumbs();
       return;
-    }
-
-    if (orderButton && refs.furnitureModal.contains(orderButton)) {
-      closeFurnitureModal();
     }
   });
 

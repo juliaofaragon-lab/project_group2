@@ -1,17 +1,3 @@
 export const refs = {
-  body: document.body,
-  header: document.querySelector('.header'),
-  mobileMenu: document.querySelector('.js-mobile-menu'),
-  categoriesList: document.querySelector('.js-categories'),
-  furnitureList: document.querySelector('.js-furniture-list'),
-  loadMoreButton: document.querySelector('.js-load-more'),
-  pagination: document.querySelector('.js-pagination'),
-  faqAccordion: document.querySelector('.js-faq-accordion'),
-  feedbackSlider: document.querySelector('.js-feedback-slider'),
-  feedbackPrevButton: document.querySelector('.js-feedback-prev'),
-  feedbackNextButton: document.querySelector('.js-feedback-next'),
-  feedbackPagination: document.querySelector('.js-feedback-pagination'),
   furnitureModal: document.querySelector('.js-furniture-modal'),
-  orderModal: document.querySelector('.js-order-modal'),
-  orderForm: document.querySelector('.js-order-form'),
 };

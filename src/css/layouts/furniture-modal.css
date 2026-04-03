@@ -100,19 +100,26 @@
 .furniture-modal__content {
   display: grid;
   align-content: start;
-  gap: 24px;
+  gap: 16px;
   min-width: 0;
 }
 
 .furniture-modal__heading {
   display: grid;
-  gap: 8px;
+  gap: 4px;
 }
 
 .furniture-modal__summary,
 .furniture-modal__details {
   display: grid;
+}
+
+.furniture-modal__summary {
   gap: 16px;
+}
+
+.furniture-modal__details {
+  gap: 32px;
 }
 
 .furniture-modal__title {
@@ -143,6 +150,10 @@
 .furniture-modal__rating {
   display: grid;
   gap: 8px;
+}
+
+.furniture-modal__rating-value {
+  display: none;
 }
 
 .furniture-modal__stars {
@@ -207,6 +218,10 @@
   background-color: var(--swatch-color, #e5e7eb);
 }
 
+.furniture-modal__color-swatch.is-light {
+  border-color: #cccccc;
+}
+
 .furniture-modal__description {
   color: #4b4b4b;
   font-size: 16px;
@@ -227,13 +242,13 @@
   padding: 12px 28px;
   font-size: 16px;
   font-weight: 500;
-  background: linear-gradient(180deg, #95131b 0%, #8d1017 100%);
+  background-color: #6b0609;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .furniture-modal__action.button:hover,
 .furniture-modal__action.button:focus {
-  background: linear-gradient(180deg, #ab1822 0%, #99141d 100%);
+  background-color: #560507;
 }
 
 .furniture-modal__action.button:disabled {
@@ -274,7 +289,7 @@
 
   .furniture-modal__content {
     max-width: 390px;
-    gap: 24px;
+    gap: 16px;
     padding-top: 8px;
   }
 

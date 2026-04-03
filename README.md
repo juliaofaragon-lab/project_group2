@@ -89,13 +89,13 @@ src/
 У репозиторії вже є заготовки для роботи з API:
 
 - `GET /categories`
-- `GET /furniture`
-- `GET /furniture/:id`
+- `GET /furnitures`
+- `GET /furnitures/:id`
 - `GET /feedbacks`
 - `POST /orders`
 
 Для базової URL-адреси API використовуй змінну середовища:
 
 ```env
-VITE_API_BASE_URL=https://your-api.example.com
+VITE_API_BASE_URL=https://furniture-store-v2.b.goit.study/api
 ```
