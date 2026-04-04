@@ -1,0 +1,9 @@
+@import url('./base/reset.css');
+@import url('./base/variables.css');
+@import url('./base/common.css');
+@import url('./layouts/furniture-modal.css');
+
+body {
+  min-height: 100vh;
+  background-color: #b1aba5;
+}
