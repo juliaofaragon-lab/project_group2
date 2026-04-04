@@ -531,8 +531,9 @@ export function initFurnitureModal() {
   resetFurnitureModal();
 
   const previewMode = new URLSearchParams(window.location.search).get('preview');
+  const isPreviewMode = import.meta.env.DEV && previewMode === 'furniture-modal';
 
-  if (previewMode === 'furniture-modal') {
+  if (isPreviewMode) {
     openPreviewModal();
   }
 
