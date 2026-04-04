@@ -1,19 +1,18 @@
-/* --- 1. БАЗОВІ СТИЛІ ТА ДЕСКТОП --- */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* Плавний перехід до секцій */
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Raleway', sans-serif;
-  padding-top: 72px; /* Місце під фіксований хедер */
+  padding-top: 72px;
 }
 
 .header {
   width: 100%;
   height: 72px;
-  background: #ffffff;
+  background: #fff;
   position: fixed;
   top: 0;
   left: 0;
@@ -21,6 +20,7 @@ body {
   display: flex;
   align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
 }
 
 .header__container {
@@ -35,35 +35,42 @@ body {
 }
 
 .logo {
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  text-decoration: none;
 }
 
 .logo__icon {
-  fill: #0a0a0a;
+  fill: currentColor;
 }
 
-/* Навігація для великих екранів */
 .nav__list {
   display: flex;
+  margin-left: auto;
+  justify-content: flex-end;
   align-items: center;
   gap: 32px;
   list-style: none;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   padding: 0;
 }
 
-.nav__link {
+.nav__list a {
   text-decoration: none;
   color: #0a0a0a;
-  font-weight: 500;
-  transition: opacity 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+  cursor: pointer;
   white-space: nowrap;
 }
 
-.nav__link:hover,
-.nav__link:focus {
+.nav__list a:hover,
+.nav__list a:focus {
   opacity: 0.5;
 }
 
@@ -76,134 +83,193 @@ body {
   padding: 0 24px;
   background-color: #6b0609;
   color: #ffffff !important;
-  border-radius: 100px;
   text-decoration: none;
+  border-radius: 100px;
   transition:
+    background-color 0.3s ease,
     transform 0.2s ease,
     opacity 0.3s ease;
+  flex-shrink: 0;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.btn-to-cart:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
+.btn-to-cart:hover,
+.btn-to-cart:focus {
+  opacity: 0.8;
+  transform: scale(1.05);
 }
 
-/* Приховуємо мобільні елементи на десктопі */
+/* Приховуємо бургер та хрестик на десктопі за замовчуванням */
 .burger,
 .menu-close-btn {
   display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
 }
 
 /* --- 2. АДАПТИВНІСТЬ --- */
 
-/* Ноутбуки */
+/* Ноутбуки (середні екрани) */
 @media (max-width: 1400px) {
   .header__container {
     padding: 0 32px;
   }
 }
 
-/* ЗАГАЛЬНА МОБІЛЬНА ЛОГІКА (менше 992px) */
+/* ЗАГАЛЬНА МОБІЛЬНА ЛОГІКА (992px і нижче) */
 @media (max-width: 992px) {
   .burger {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
     margin-left: auto;
+    z-index: 1001; /* Нижче за відкрите меню */
   }
 
-  .burger svg {
-    fill: #333;
+  .burger span {
+    width: 100%;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
   }
 
-  /* Мобільне меню (тег NAV) */
-  .header__nav {
-    position: fixed;
-    top: 0;
-    right: -100%; /* Початково сховано за екраном */
-    background: #ffffff;
-    z-index: 1050;
-    transition: right 0.4s ease-in-out;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-    display: block; /* Працює разом з JS .hidden */
-  }
-
-  /* Стан відкритого меню */
-  .header__nav.active {
-    right: 0;
-  }
-
-  /* Кнопка закриття всередині NAV */
+  /* Хрестик за замовчуванням прихований, покажеться тільки в активному меню */
   .menu-close-btn {
-    display: block;
+    display: none;
     position: absolute;
     top: 20px;
     right: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 0;
+    z-index: 1100; /* Найвищий рівень */
+    transition: transform 0.3s ease;
+  }
+
+  .menu-close-btn:hover {
+    transform: rotate(90deg);
   }
 
   .menu-close-btn svg {
     fill: #333;
   }
 
-  .nav__list {
-    flex-direction: column;
-    gap: 32px;
+  /* Показуємо хрестик ТІЛЬКИ коли меню активне */
+  .nav__list.active .menu-close-btn {
+    display: block;
   }
 
-  /* Приховуємо бургер, коли хедер має клас відкриття */
+  /* ПРИХОВУЄМО БУРГЕР, коли на хедері клас відкриття (додається через JS) */
   .header.is-open .burger {
     display: none;
   }
 }
 
-/* ПЛАНШЕТ (768px - 992px) */
+/* ПЛАНШЕТ (768px - 992px) - Специфікація 900px */
 @media (min-width: 768px) and (max-width: 992px) {
-  .header__nav {
-    top: 72px; /* Відступ під хедером */
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 72px;
+    right: -298px; /* Сховано за межами ширини */
+
+    /* Розміри вікна згідно ТЗ */
     width: 298px;
     height: 276px;
-    padding: 24px 25px;
-  }
 
-  .nav__list {
+    background: #fff;
+    padding: 24px 98px 24px 25px;
+
+    /* Відформатовано по правому краю */
     align-items: flex-end;
     text-align: right;
+
+    gap: 32px;
+    transition: right 0.4s ease-in-out;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1050;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .nav__list.active {
+    right: 0;
+  }
+
+  .nav__list li {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
 
   /* Умова ТЗ: приховати FAQ на планшеті */
-  .nav__item.faq {
+  .nav__list .nav__item.faq {
     display: none;
   }
 
+  /* Кнопка на планшеті довжиною 175px */
   .btn-to-cart {
     width: 175px;
+    min-width: 175px;
+    max-width: 175px;
     padding: 0;
   }
 }
 
-/* МОБІЛЬНІ ТЕЛЕФОНИ (до 767px) */
+/* МОБІЛЬНІ ТЕЛЕФОНИ (до 767px) - Специфікація 375px */
 @media (max-width: 767px) {
   .header__container {
     padding: 0 20px;
   }
 
-  .header__nav {
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
     top: 72px;
+    right: -100%;
+
+    /* Займає все поле під хедером */
     width: 100%;
     height: calc(100vh - 72px);
+
+    background: #fff;
+    /* Паддінги та Gap згідно ТЗ */
     padding: 32px 20px;
-  }
+    gap: 32px;
 
-  .nav__list {
+    /* Елементи по центру */
     align-items: center;
-    text-align: center;
+    justify-content: flex-start;
+
+    transition: 0.4s ease-in-out;
+    z-index: 1050;
+    box-sizing: border-box;
+    overflow-y: auto;
   }
 
-  .btn-to-cart {
+  .nav__list.active {
+    right: 0;
+  }
+
+  .nav__list li {
     width: 100%;
-    max-width: 335px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Кнопка на мобільних широка 335px */
+  .btn-to-cart {
+    width: 335px;
+    min-width: 335px;
+    max-width: 100%; /* Для зовсім маленьких екранів */
+    height: 42px;
+    padding: 0;
   }
 }
