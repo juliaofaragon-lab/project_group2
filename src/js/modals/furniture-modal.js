@@ -523,7 +523,7 @@ function openPreviewModal() {
   renderFurnitureInfo();
 }
 
-export function initFurnitureModal() {
+export function initFurnitureModal(options = {}) {
   if (!refs.furnitureModal) {
     return;
   }
@@ -531,7 +531,8 @@ export function initFurnitureModal() {
   resetFurnitureModal();
 
   const previewMode = new URLSearchParams(window.location.search).get('preview');
-  const isPreviewMode = import.meta.env.DEV && previewMode === 'furniture-modal';
+  const isPreviewMode =
+    options.forcePreview === true || (import.meta.env.DEV && previewMode === 'furniture-modal');
 
   if (isPreviewMode) {
     openPreviewModal();
