@@ -1,12 +1,28 @@
+// import '../css/styles.css';
+// import { initSmoothScroll } from './helpers/smooth-scroll.js';
+
+// function initApp() {
+//   initSmoothScroll();
+// }
+
+// if (document.readyState === 'loading') {
+//   document.addEventListener('DOMContentLoaded', initApp);
+// } else {
+//   initApp();
+// }
+
 import '../css/styles.css';
-import { initSmoothScroll } from './helpers/smooth-scroll.js';
+// Імпортуємо обидві функції з одного файлу header.js
+import { initHeader, initSmoothScroll } from './header/header.js';
 
 function initApp() {
-  initSmoothScroll();
+  if (typeof initHeader === 'function') {
+    initHeader();
+  }
+
+  if (typeof initSmoothScroll === 'function') {
+    initSmoothScroll();
+  }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
-} else {
-  initApp();
-}
+initApp();
