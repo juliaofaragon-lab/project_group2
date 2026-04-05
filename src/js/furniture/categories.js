@@ -1,8 +1,9 @@
-import { getCategories } from '../api/furniture-api';
+import { getCategories, getProductsByCategory } from '../api/furniture-api';
+import { renderProductsByCategory } from './furniture-list';
 
 const categoryList = document.querySelector('.category-list-furniture');
 
-let category = 'all';
+export let currentCategory = 'all';
 
 export function renderCategories(array) {
   let i = '0';
@@ -37,7 +38,11 @@ export async function removeCategories() {
   categories.forEach((category) => category.classList.remove('selected-category'));
 }
 
-export function handlerSelectCategory(e) {
+export async function handlerSelectCategory(e) {
   removeCategories();
   e.target.closest('li').classList.add('selected-category');
+  currentCategory = e.target.dataset.categoryid;
+
+  const products = await getProductsByCategory(currentCategory, 1);
+  renderProductsByCategory(products);
 }

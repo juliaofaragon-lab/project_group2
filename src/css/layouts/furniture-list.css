@@ -23,9 +23,10 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 .selected-category {
-  border: 8px solid #6b0609;
+  box-shadow: inset 0 0 0 8px #6b0609;
 }
 .category-paragraph {
 }
@@ -34,10 +35,10 @@
   width: 335px;
   height: 277px;
 }
-.produc-info {
+.product-info {
   display: flex;
   justify-content: center;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
 }
 .product-title {
@@ -77,8 +78,9 @@
 }
 
 .category-btn {
+  text-align: center;
   border-radius: 8px;
-  padding: 32px 16px;
+  padding: 16px 16px;
   width: 159px;
   height: 122px;
 }
@@ -93,5 +95,12 @@
   letter-spacing: 0.01em;
   text-align: center;
   color: #ffffff;
-  width: calc();
+  /* width: calc(); */
+}
+.products-list-furniture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
 }

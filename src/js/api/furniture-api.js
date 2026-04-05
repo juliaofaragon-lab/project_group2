@@ -9,5 +9,15 @@ export function getFurnitureById(id) {
 
 export async function getCategories() {
   const { data } = await axios('/categories');
+
   return data;
+}
+
+export async function getProductsByCategory(category, page) {
+  if (category === 'all') {
+    const { data } = await axios(`/furnitures?limit=8&page=${page}`);
+    return data.furnitures;
+  }
+  const { data } = await axios(`/furnitures?category=${category}&limit=8&page=${page}`);
+  return data.furnitures;
 }
