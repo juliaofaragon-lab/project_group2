@@ -19,7 +19,7 @@
 }
 .category-list-furniture {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
@@ -31,15 +31,19 @@
 .category-paragraph {
 }
 .product-img {
+  display: block;
   border-radius: 8px;
   width: 335px;
   height: 277px;
+  margin-bottom: 16px;
 }
 .product-info {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 16px;
 }
 .product-title {
   font-family: Raleway;
@@ -58,6 +62,7 @@
   border-radius: 64px;
 }
 .product-price {
+  margin-top: auto;
   font-family: Raleway;
   font-weight: 600;
   font-size: 20px;
@@ -65,6 +70,12 @@
   color: #080c09;
 }
 .btn-loadmore-furniture {
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.2),
+    inset 0 -2px 1px 0 rgba(8, 12, 9, 0.2),
+    inset 0 0 0 1px rgba(8, 12, 9, 0.15),
+    inset 0 2px 1px 0 rgba(255, 255, 255, 0.25);
+  background: #6b0609;
   border-radius: 100px;
   padding: 10px 24px;
   width: 335px;
@@ -74,7 +85,16 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 160%;
-  color: #080c09;
+  color: #ffffff;
+  margin: 0 auto;
+  display: block;
+  padding-bottom: 32px;
+}
+
+.btn-loadmore-furniture:hover,
+.btn-loadmore-furniture:focus {
+  background: #6b0609;
+  opacity: 0.5;
 }
 
 .category-btn {
@@ -99,8 +119,74 @@
 }
 .products-list-furniture {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 24px;
+  margin-bottom: 32px;
+}
+.container-furniture {
+  padding: 48px 20px;
+}
+.product-color-item {
+  width: 24px;
+  height: 24px;
+  border-radius: 64px;
+}
+.product-btn-readmore {
+  display: block;
+  border-radius: 100px;
+  padding: 10px 24px;
+  width: 335px;
+  height: 46px;
+  margin-top: auto;
+  box-shadow:
+    0 1px 2px 0 rgba(8, 12, 9, 0.05),
+    inset 0 -2px 1px 0 rgba(8, 12, 9, 0.05),
+    inset 0 0 0 1px rgba(8, 12, 9, 0.05);
+  background: rgba(8, 12, 9, 0.05);
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* tablet */
+@media (min-width: 768px) {
+  .product-item {
+    width: calc((100% - 24px) / 2);
+  }
+  .container-furniture {
+    padding: 48px 32px;
+  }
+  .item-category {
+    width: calc((100% - 72px) / 4);
+  }
+  .category-list-furniture {
+    gap: 24px;
+  }
+}
+
+/* desc */
+@media (min-width: 1440px) {
+  .product-item {
+    display: flex;
+    flex-direction: column;
+    width: calc((100% - 72px) / 4);
+  }
+  .product-btn-readmore {
+    padding: 10px 24px;
+    width: 310px;
+    height: 46px;
+  }
+  .products-list-furniture {
+    gap: 40px 24px;
+  }
+  .container-furniture {
+    padding: 80px 64px;
+  }
+  .item-category {
+    width: calc((100% - 144px) / 7);
+  }
 }

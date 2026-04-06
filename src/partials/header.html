@@ -1,39 +1,29 @@
 <header class="header">
-  <div class="container header__container">
-    <a class="logo" href="./index.html" aria-label="Логотип проєкту">Project Group 2</a>
+  <div class="header__container">
+    <a class="logo" href="/" aria-label="Логотип Меблерія">
+      <svg class="logo__icon" width="157" height="35">
+        <use href="./img/icons/sprite.svg#icon-logo-footer"></use>
+      </svg>
+    </a>
 
-    <nav class="nav header__nav" aria-label="Основна навігація">
+    <nav class="header__nav" data-mobile-menu>
+      <button class="menu-close-btn" type="button" data-close-mobile-menu>
+        <svg width="32" height="32"><use href="./img/icons/sprite.svg#icon-close-btn"></use></svg>
+      </button>
+
       <ul class="nav__list">
-        <li class="nav__item"><a class="nav__link" href="#hero">Головна</a></li>
-        <li class="nav__item"><a class="nav__link" href="#furniture">Наші меблі</a></li>
-        <li class="nav__item"><a class="nav__link" href="#about">Про нас</a></li>
-        <li class="nav__item"><a class="nav__link" href="#faq">FAQ</a></li>
-        <li class="nav__item"><a class="nav__link" href="#feedback">Відгуки</a></li>
+        <li><a class="nav__link" href="#furniture-list" data-link-mobile-menu>Наші меблі</a></li>
+        <li><a class="nav__link" href="#about" data-link-mobile-menu>Про нас</a></li>
+        <li class="nav__item faq">
+          <a class="nav__link" href="#faq" data-link-mobile-menu>Часті питання</a>
+        </li>
+        <li><a class="nav__link" href="#feedback" data-link-mobile-menu>Відгуки</a></li>
+        <li><a class="btn-to-cart" href="#furniture-list" data-link-mobile-menu>До покупок</a></li>
       </ul>
     </nav>
 
-    <button class="burger" type="button" data-menu-open aria-label="Відкрити меню">
-      <span class="burger__line"></span>
-      <span class="burger__line"></span>
-      <span class="burger__line"></span>
+    <button class="burger" type="button" data-open-mobile-menu>
+      <svg width="44" height="32"><use href="./img/icons/sprite.svg#icon-burger-btn"></use></svg>
     </button>
-  </div>
-
-  <div class="mobile-menu js-mobile-menu" hidden>
-    <div class="mobile-menu__inner">
-      <button class="mobile-menu__close" type="button" data-menu-close aria-label="Закрити меню">
-        ✕
-      </button>
-
-      <nav class="mobile-menu__nav" aria-label="Мобільна навігація">
-        <ul class="mobile-menu__list">
-          <li><a class="mobile-menu__link" href="#hero" data-menu-link>Головна</a></li>
-          <li><a class="mobile-menu__link" href="#furniture" data-menu-link>Наші меблі</a></li>
-          <li><a class="mobile-menu__link" href="#about" data-menu-link>Про нас</a></li>
-          <li><a class="mobile-menu__link" href="#faq" data-menu-link>FAQ</a></li>
-          <li><a class="mobile-menu__link" href="#feedback" data-menu-link>Відгуки</a></li>
-        </ul>
-      </nav>
-    </div>
   </div>
 </header>

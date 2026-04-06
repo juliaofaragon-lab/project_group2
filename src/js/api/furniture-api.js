@@ -16,8 +16,8 @@ export async function getCategories() {
 export async function getProductsByCategory(category, page) {
   if (category === 'all') {
     const { data } = await axios(`/furnitures?limit=8&page=${page}`);
-    return data.furnitures;
+    return data;
   }
   const { data } = await axios(`/furnitures?category=${category}&limit=8&page=${page}`);
-  return data.furnitures;
+  return data;
 }

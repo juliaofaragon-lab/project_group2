@@ -1,31 +1,30 @@
+import axios from 'axios';
+
 const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').trim().replace(/\/+$/, '');
 
-async function getErrorMessage(response) {
-  try {
-    const data = await response.json();
+function getErrorMessage(error) {
+  const response = typeof error === 'object' && error !== null ? error.response : undefined;
+  const data = response?.data;
 
-    if (typeof data?.message === 'string' && data.message.trim()) {
-      return data.message.trim();
-    }
-  } catch {
-    // Ignore JSON parsing errors and fall back to the status message.
+  if (typeof data?.message === 'string' && data.message.trim()) {
+    return data.message.trim();
   }
 
-  return `Request failed with status ${response.status}.`;
+  if (typeof data === 'string' && data.trim()) {
+    return data.trim();
+  }
+
+  if (response?.status) {
+    return `Request failed with status ${response.status}.`;
+  }
+
+  return 'Network request failed.';
 }
 
-function buildUrl(path, params = {}) {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== '' && value !== null && value !== undefined) {
-      searchParams.append(key, String(value));
-    }
-  });
-
-  const query = searchParams.toString();
-
-  return `${BASE_URL}${path}${query ? `?${query}` : ''}`;
+function normalizeParams(params = {}) {
+  return Object.fromEntries(
+    Object.entries(params).filter(([, value]) => value !== '' && value !== null && value !== undefined)
+  );
 }
 
 export async function request(path, options = {}) {
@@ -33,16 +32,22 @@ export async function request(path, options = {}) {
     throw new Error('Set VITE_API_BASE_URL in your local .env file.');
   }
 
-  const { params = {}, ...fetchOptions } = options;
-  const response = await fetch(buildUrl(path, params), fetchOptions);
+  const { params = {}, ...axiosOptions } = options;
 
-  if (!response.ok) {
-    throw new Error(await getErrorMessage(response));
+  try {
+    const response = await axios({
+      baseURL: BASE_URL,
+      params: normalizeParams(params),
+      url: path,
+      ...axiosOptions,
+    });
+
+    if (response.status === 204) {
+      return null;
+    }
+
+    return response.data;
+  } catch (error) {
+    throw new Error(getErrorMessage(error), { cause: error });
   }
-
-  if (response.status === 204) {
-    return null;
-  }
-
-  return response.json();
 }
