@@ -1,15 +1,15 @@
-/* --- 1. БАЗОВІ СТИЛІ ТА ДЕСКТОП --- */
 html {
-  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Raleway', sans-serif;
-  padding-top: 72px; /* Місце під фіксований хедер */
+  padding-top: 72px; /* Компенсація висоти хедера */
 }
 
+/* --- Хедер --- */
 .header {
   width: 100%;
   height: 72px;
@@ -31,20 +31,40 @@ body {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 64px;
+  position: relative;
+  height: 100%;
   box-sizing: border-box;
 }
 
-.logo {
-  display: flex;
+/* --- Універсальний стиль кнопки --- */
+.btn-to-cart {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  background-color: #6b0609 !important;
+  color: #ffffff !important;
+  border-radius: 100px;
   text-decoration: none;
+  height: 42px;
+  padding: 0 24px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  /* Твоя тінь: X=0, Y=4, Blur=4, Color=Black 25% */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.logo__icon {
-  fill: #0a0a0a;
+.btn-to-cart:hover {
+  background-color: #8a0a0d !important;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); /* Посилення тіні при наведенні */
 }
 
-/* Навігація для великих екранів */
+/* --- Десктоп Навігація (від 993px) --- */
 .nav__list {
   display: flex;
   align-items: center;
@@ -58,152 +78,155 @@ body {
   text-decoration: none;
   color: #0a0a0a;
   font-weight: 500;
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
+  transition: color 0.3s;
 }
 
-.nav__link:hover,
-.nav__link:focus {
-  opacity: 0.5;
+.nav__link:hover {
+  color: #6b0609;
 }
 
-.btn-to-cart {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 130px;
-  height: 42px;
-  padding: 0 24px;
-  background-color: #6b0609;
-  color: #ffffff !important;
-  border-radius: 100px;
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    opacity 0.3s ease;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.btn-to-cart:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-
-/* Приховуємо мобільні елементи на десктопі */
-.burger,
-.menu-close-btn {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-/* --- 2. АДАПТИВНІСТЬ --- */
-
-/* Ноутбуки */
-@media (max-width: 1400px) {
-  .header__container {
-    padding: 0 32px;
-  }
-}
-
-/* ЗАГАЛЬНА МОБІЛЬНА ЛОГІКА (менше 992px) */
+/* --- Мобільні стилі (Загальні < 992px) --- */
 @media (max-width: 992px) {
-  .burger {
-    display: block;
-    margin-left: auto;
+  .header__container {
+    padding: 0 20px;
   }
 
-  .burger svg {
-    fill: #333;
-  }
-
-  /* Мобільне меню (тег NAV) */
-  .header__nav {
-    position: fixed;
-    top: 0;
-    right: -100%; /* Початково сховано за екраном */
-    background: #ffffff;
-    z-index: 1050;
-    transition: right 0.4s ease-in-out;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-    display: block; /* Працює разом з JS .hidden */
-  }
-
-  /* Стан відкритого меню */
-  .header__nav.active {
-    right: 0;
-  }
-
-  /* Кнопка закриття всередині NAV */
+  .burger,
   .menu-close-btn {
-    display: block;
-    position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1100;
+  }
+
+  .menu-close-btn {
+    display: none;
+    position: fixed;
     top: 20px;
     right: 20px;
   }
 
-  .menu-close-btn svg {
-    fill: #333;
+  .header.is-open .burger {
+    display: none;
+  }
+  .header.is-open .menu-close-btn {
+    display: block;
+  }
+
+  .header__nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #ffffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    z-index: 1050;
+    gap: 32px;
+    box-sizing: border-box;
+  }
+
+  .header__nav.active {
+    display: flex !important;
   }
 
   .nav__list {
     flex-direction: column;
     gap: 32px;
-  }
-
-  /* Приховуємо бургер, коли хедер має клас відкриття */
-  .header.is-open .burger {
-    display: none;
-  }
-}
-
-/* ПЛАНШЕТ (768px - 992px) */
-@media (min-width: 768px) and (max-width: 992px) {
-  .header__nav {
-    top: 72px; /* Відступ під хедером */
-    width: 298px;
-    height: 276px;
-    padding: 24px 25px;
-  }
-
-  .nav__list {
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  /* Умова ТЗ: приховати FAQ на планшеті */
-  .nav__item.faq {
-    display: none;
-  }
-
-  .btn-to-cart {
-    width: 175px;
+    list-style: none;
+    margin: 0;
     padding: 0;
   }
 }
 
-/* МОБІЛЬНІ ТЕЛЕФОНИ (до 767px) */
+/* --- 1. Специфікація для мобілок (до 767px, зокрема 375px) --- */
 @media (max-width: 767px) {
-  .header__container {
-    padding: 0 20px;
-  }
-
   .header__nav {
-    top: 72px;
-    width: 100%;
-    height: calc(100vh - 72px);
-    padding: 32px 20px;
+    position: fixed !important;
+    top: 72px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 72px) !important;
+
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    /* Паддінг зверху рівно 32px за ТЗ */
+    padding: 32px 20px !important;
+    gap: 32px !important;
+    z-index: 1050;
   }
 
   .nav__list {
-    align-items: center;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  .nav__link {
+    font-size: 18px;
     text-align: center;
   }
 
-  .btn-to-cart {
-    width: 100%;
-    max-width: 335px;
+  .nav__item.faq {
+    display: block !important;
   }
+
+  .btn-to-cart {
+    width: 335px !important;
+    max-width: 90vw;
+  }
+}
+
+/* --- 2. Специфікація для 768px - 899px --- */
+@media (min-width: 768px) and (max-width: 899px) {
+  .header__nav {
+    width: 249px;
+    height: 334px;
+    padding: 24px 32px;
+    align-items: flex-end;
+  }
+  .nav__list {
+    align-items: flex-end;
+  }
+  .btn-to-cart {
+    width: 185px !important;
+  }
+}
+
+/* --- 3. Специфікація для 900px - 992px --- */
+@media (min-width: 900px) and (max-width: 992px) {
+  .header__nav {
+    width: 298px !important;
+    height: 276px !important;
+    /* Паддінги: верх/низ 24, право 98, ліво 25 */
+    padding: 24px 98px 24px 25px !important;
+    align-items: flex-end;
+  }
+  .nav__list {
+    align-items: flex-end;
+  }
+  .nav__link {
+    font-size: 18px !important;
+  }
+  .nav__item.faq {
+    display: none !important;
+  }
+  .btn-to-cart {
+    width: 175px !important;
+  }
+}
+
+/* Приховування кнопок на десктопі */
+@media (min-width: 993px) {
+  .burger,
+  .menu-close-btn {
+    display: none !important;
+  }
+}
+
+/* Блокування скролу */
+body.is-scroll-locked {
+  overflow: hidden;
+  touch-action: none;
 }
