@@ -1,4 +1,6 @@
 import axios from 'axios';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const close = document.querySelector('.order-modal-svg-close');
 const modal = document.querySelector('.order-modal');
@@ -22,14 +24,28 @@ document.addEventListener('keydown', (e) => {
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const { name, tel, comment } = e.target.elements;
+  const { name, phone, comment } = e.target.elements;
   const formData = {
     name: name.value,
-    tel: tel.value,
+    phone: phone.value,
     comment: comment.value,
     modelId: '682f9bbf8acbdf505592ac36',
     color: '#1212ca',
   };
 
-  form.reset();
+  try {
+    const response = await axios.post('https://furniture-store.b.goit.study/api/orders', formData);
+    const orderData = response.data;
+
+    console.log('orderData :>> ', orderData);
+    console.log(response.status);
+    iziToast.show({
+      message: 'Успіх!',
+      position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+    });
+    modal.classList.add('hidden');
+    e.target.reset();
+  } catch (error) {
+    console.log(error.message);
+  }
 });

@@ -15,9 +15,16 @@
         </div>
       </div>
       <div class="order-modal-form">
-        <label for="user-tel" class="order-modal-form-label">Телефон*</label>
+        <label for="user-phone" class="order-modal-form-label">Телефон*</label>
         <div class="order-modal-input-div">
-          <input type="tel" id="tel" name="tel" class="order-modal-form-input" required />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="order-modal-form-input"
+            pattern="[0-9]{12}"
+            required
+          />
         </div>
       </div>
 
