@@ -1,56 +1,267 @@
-import axios from 'axios';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const close = document.querySelector('.order-modal-svg-close');
-const modal = document.querySelector('.order-modal');
-const form = document.querySelector('.order-form');
+import { createOrder } from '../api/orders-api.js';
+import { lockScroll, unlockScroll } from '../helpers/scroll-lock.js';
 
-close.addEventListener('click', () => {
-  modal.classList.add('hidden');
-});
+const state = {
+  color: '',
+  colorLabel: '',
+  lastTrigger: null,
+  modelId: '',
+  modelName: '',
+};
 
-document.addEventListener('click', (e) => {
-  if (e.target == modal) {
-    modal.classList.add('hidden');
+let isInitialized = false;
+
+function getElements() {
+  const modal = document.querySelector('.js-order-modal');
+
+  if (!modal) {
+    return {};
   }
-});
 
-document.addEventListener('keydown', (e) => {
-  if (e.key == 'Escape') {
-    modal.classList.add('hidden');
+  return {
+    form: modal.querySelector('.js-order-form'),
+    modal,
+    nameInput: modal.querySelector('input[name="name"]'),
+    phoneInput: modal.querySelector('input[name="phone"]'),
+    commentInput: modal.querySelector('textarea[name="comment"]'),
+    stateText: modal.querySelector('.js-order-modal-state'),
+    submitButton: modal.querySelector('.order-modal__submit'),
+    summary: modal.querySelector('.js-order-modal-summary'),
+  };
+}
+
+function renderStateMessage(message = '', type = 'info') {
+  const { stateText } = getElements();
+
+  if (!stateText) {
+    return;
   }
-});
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const { name, phone, comment } = e.target.elements;
-  const formData = {
-    name: name.value,
-    phone: phone.value,
-    comment: comment.value,
-    modelId: '682f9bbf8acbdf505592ac36',
-    color: '#1212ca',
+  if (!message) {
+    stateText.hidden = true;
+    stateText.textContent = '';
+    delete stateText.dataset.state;
+    return;
+  }
+
+  stateText.hidden = false;
+  stateText.textContent = message;
+  stateText.dataset.state = type;
+}
+
+function renderSummary() {
+  const { summary } = getElements();
+
+  if (!summary) {
+    return;
+  }
+
+  const parts = [state.modelName];
+
+  if (state.colorLabel) {
+    parts.push(`Колір: ${state.colorLabel}`);
+  }
+
+  const text = parts.filter(Boolean).join(' · ');
+
+  summary.hidden = !text;
+  summary.textContent = text;
+}
+
+function setSubmitState(isBusy) {
+  const { submitButton } = getElements();
+
+  if (!submitButton) {
+    return;
+  }
+
+  submitButton.disabled = isBusy;
+  submitButton.textContent = isBusy ? 'Надсилаємо...' : 'Надіслати заявку';
+}
+
+function normalizePhone(value) {
+  return String(value ?? '').replace(/\D/g, '');
+}
+
+function validateOrderPayload(payload) {
+  if (!payload.name || payload.name.length < 2 || payload.name.length > 64) {
+    return "Ім'я має містити від 2 до 64 символів.";
+  }
+
+  if (!/^\d{12}$/.test(payload.phone)) {
+    return 'Телефон має містити 12 цифр без пробілів і символів.';
+  }
+
+  if (payload.comment && (payload.comment.length < 5 || payload.comment.length > 256)) {
+    return 'Коментар має містити від 5 до 256 символів.';
+  }
+
+  if (!payload.modelId) {
+    return 'Не вдалося визначити модель меблів для замовлення.';
+  }
+
+  if (!payload.color) {
+    return 'Не вдалося визначити колір меблів для замовлення.';
+  }
+
+  return '';
+}
+
+export function openOrderModal(options = {}) {
+  const { modal, form, nameInput } = getElements();
+
+  if (!modal || !form) {
+    return;
+  }
+
+  form.reset();
+
+  state.color = options.color ?? '';
+  state.colorLabel = options.colorLabel ?? '';
+  state.lastTrigger = options.returnFocusTo ?? null;
+  state.modelId = options.modelId ?? '';
+  state.modelName = options.modelName ?? '';
+
+  renderSummary();
+  renderStateMessage();
+  setSubmitState(false);
+
+  modal.hidden = false;
+  lockScroll();
+
+  requestAnimationFrame(() => {
+    const modalWindow = modal.querySelector('.order-modal');
+
+    if (modalWindow) {
+      modalWindow.scrollTop = 0;
+    }
+
+    nameInput?.focus();
+  });
+}
+
+export function closeOrderModal(options = {}) {
+  const { modal, form } = getElements();
+
+  if (!modal || !form) {
+    return;
+  }
+
+  const { restoreFocus = true } = options;
+
+  modal.hidden = true;
+  form.reset();
+  renderStateMessage();
+  setSubmitState(false);
+  unlockScroll();
+
+  if (restoreFocus && state.lastTrigger instanceof HTMLElement) {
+    state.lastTrigger.focus();
+  }
+}
+
+async function handleOrderSubmit(event) {
+  event.preventDefault();
+
+  const { form } = getElements();
+
+  if (!form?.reportValidity()) {
+    return;
+  }
+
+  const formData = new FormData(event.currentTarget);
+  const payload = {
+    color: state.color,
+    comment: String(formData.get('comment') ?? '').trim(),
+    modelId: state.modelId,
+    name: String(formData.get('name') ?? '').trim(),
+    phone: normalizePhone(formData.get('phone')),
   };
 
-  try {
-    const response = await axios.post('https://furniture-store.b.goit.study/api/orders', formData);
-    const orderData = response.data;
+  const validationMessage = validateOrderPayload(payload);
 
-    console.log('orderData :>> ', orderData);
-    console.log(response.status);
-    iziToast.show({
-      message: `Ви замовили ${orderData.model}, номер замовлення ${orderData.orderNum}`,
-      position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-    });
-    modal.classList.add('hidden');
-    e.target.reset();
-  } catch (error) {
+  if (validationMessage) {
+    renderStateMessage(validationMessage, 'error');
     iziToast.error({
-      title: 'Помилка',
-      message: 'Щось пішло не так...',
+      message: validationMessage,
       position: 'bottomRight',
     });
-    console.log(error.message);
+    return;
   }
-});
+
+  setSubmitState(true);
+  renderStateMessage('Надсилаємо заявку...', 'loading');
+
+  try {
+    const order = await createOrder(payload);
+    const orderNumber = order?.orderNum ? ` Номер замовлення: ${order.orderNum}.` : '';
+
+    iziToast.success({
+      message: `Заявку на ${state.modelName || 'меблі'} успішно надіслано.${orderNumber}`,
+      position: 'bottomRight',
+    });
+
+    closeOrderModal();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Не вдалося надіслати заявку.';
+
+    renderStateMessage(message, 'error');
+    iziToast.error({
+      message,
+      position: 'bottomRight',
+    });
+  } finally {
+    setSubmitState(false);
+  }
+}
+
+export function initOrderModal() {
+  const { form, modal, phoneInput, commentInput } = getElements();
+
+  if (!modal || !form || isInitialized) {
+    return;
+  }
+
+  isInitialized = true;
+
+  phoneInput?.addEventListener('input', () => {
+    phoneInput.value = normalizePhone(phoneInput.value).slice(0, 12);
+  });
+
+  commentInput?.addEventListener('input', () => {
+    if (commentInput.value.length > 256) {
+      commentInput.value = commentInput.value.slice(0, 256);
+    }
+  });
+
+  form.addEventListener('submit', handleOrderSubmit);
+
+  document.addEventListener('click', (event) => {
+    const closeButton = event.target.closest('[data-close-order-modal]');
+    const openButton = event.target.closest('[data-open-order-modal]');
+
+    if (openButton) {
+      openOrderModal({
+        color: openButton.dataset.orderColor ?? '',
+        colorLabel: openButton.dataset.orderColorLabel ?? '',
+        modelId: openButton.dataset.orderModelId ?? '',
+        modelName: openButton.dataset.orderModelName ?? '',
+        returnFocusTo: openButton,
+      });
+      return;
+    }
+
+    if (closeButton || event.target === modal) {
+      closeOrderModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !modal.hidden) {
+      closeOrderModal();
+    }
+  });
+}
