@@ -1,5 +1,5 @@
 
-.container {
+.faq .container {
     background-color: #fff;
     padding: 48px 0;
 }
@@ -96,7 +96,7 @@
 
 /* Styles for Desktop devices */
 @media only screen and (min-width: 1440px) {
-    .container {
+    .faq .container {
         padding: 80px 0;
     }
 
