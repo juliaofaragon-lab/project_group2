@@ -55,7 +55,7 @@ src/
 npm install
 ```
 
-2. Create a local `.env` file in the project root and add:
+2. Optionally create a local `.env` file in the project root if you want to override the default API URL:
 
 ```env
 VITE_API_BASE_URL=https://furniture-store-v2.b.goit.study/api

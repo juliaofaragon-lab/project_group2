@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').trim().replace(/\/+$/, '');
+const DEFAULT_BASE_URL = 'https://furniture-store-v2.b.goit.study/api';
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? DEFAULT_BASE_URL)
+  .trim()
+  .replace(/\/+$/, '');
 
 function getErrorMessage(error) {
   const response = typeof error === 'object' && error !== null ? error.response : undefined;
@@ -28,10 +31,6 @@ function normalizeParams(params = {}) {
 }
 
 export async function request(path, options = {}) {
-  if (!BASE_URL) {
-    throw new Error('Set VITE_API_BASE_URL in your local .env file.');
-  }
-
   const { params = {}, ...axiosOptions } = options;
 
   try {
