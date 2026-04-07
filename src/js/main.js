@@ -1,16 +1,4 @@
-// import '../css/styles.css';
-// import { initSmoothScroll } from './helpers/smooth-scroll.js';
-
-// function initApp() {
-//   initSmoothScroll();
-// }
-
-// if (document.readyState === 'loading') {
-//   document.addEventListener('DOMContentLoaded', initApp);
-// } else {
-//   initApp();
-// }
-
+import './faq/faq.js';
 import '../css/styles.css';
 import { initAbout } from './about/about.js';
 // Імпортуємо обидві функції з одного файлу header.js

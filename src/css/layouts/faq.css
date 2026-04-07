@@ -1,0 +1,107 @@
+
+.container {
+    background-color: #fff;
+    padding: 48px 0;
+}
+.faq__title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: #080c09;
+    margin-bottom: 32px;
+}
+
+.faq__list {
+    border-bottom: 1px solid rgba(8, 12, 9, 0.15);
+}
+
+.faq__item {
+    transition: background-color 300ms ease;
+    border-top: 1px solid rgba(8, 12, 9, 0.15) !important;
+}
+
+.faq__btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: start;
+    width: 100%;
+    padding: 20px 0;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #080c09;
+}
+
+.faq__btn.ac-trigger {
+    display: flex !important;
+}
+
+.faq__btn:hover {
+    cursor: pointer;
+}
+
+.faq__btn-text {
+    text-align: left;
+}
+
+.faq__icon {
+    margin-left: 24px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    width: 32px;
+    height: 32px;
+    align-self: center;
+    fill: #080c09;
+    stroke-width: 1px;
+    stroke: #000;
+    fill: #000;
+    display: block;
+    pointer-events: none;
+}
+
+.ac {
+    margin-top: 0 !important;
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.faq__answer {
+    overflow: hidden;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #080c09;
+    padding-bottom: 24px;
+}
+
+.is-active .faq__icon {
+    transform: rotate(180deg);
+}
+
+.ac-trigger::after {
+    display: none !important;
+}
+
+/* Styles for Tablet devices */
+@media only screen and (min-width: 768px) {
+    .faq__btn {
+        padding: 21.5px 0;
+    }
+}
+
+/* Styles for Desktop devices */
+@media only screen and (min-width: 1440px) {
+    .container {
+        padding: 80px 0;
+    }
+
+    .faq__list {
+        max-width: 865px;
+        margin: 0 auto;
+    }
+}
