@@ -50,6 +50,8 @@
     width: 100%;
     border-radius: 4px;
     background-color: inherit;
+    overflow: hidden;
+    line-height: 0;
 }
 
 
@@ -57,8 +59,11 @@
     display: block;
     width: 100%;
     object-fit: cover;
-    border-radius: 4px;
+    height: 100%;
+    border-radius: 0;
     background-color: inherit;
+    transform: scale(1.02);
+    transform-origin: center;
 }
 
 /* tablet */
@@ -87,10 +92,10 @@
     }
 }
 
-/* desc */
-@media (min-width: 1440px) {
+/* desktop */
+@media (min-width: 1024px) {
     .section-about {
-        padding: 64px 0;
+        padding: 64px;
         align-items: center;
     }
 
@@ -105,7 +110,8 @@
     }
 
     .context-about {
-        max-width: 644;
+        width: calc((100% - 24px) / 2);
+        max-width: 644px;
         margin: auto 0;
         line-height: 0;
     }
@@ -122,6 +128,7 @@
     }
 
     .pict-about {
+        width: calc((100% - 24px) / 2);
         max-width: 100%;
         line-height: inherit;
     }
