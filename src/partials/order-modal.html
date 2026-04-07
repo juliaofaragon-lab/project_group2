@@ -9,13 +9,13 @@
     <h2 class="order-modal-h2">Замовити</h2>
     <form class="order-form">
       <div class="order-modal-form">
-        <label for="user-name" class="order-modal-form-label">Ім'я*</label>
+        <label for="name" class="order-modal-form-label">Ім'я*</label>
         <div class="order-modal-input-div">
           <input type="text" id="name" name="name" class="order-modal-form-input" required />
         </div>
       </div>
       <div class="order-modal-form">
-        <label for="user-phone" class="order-modal-form-label">Телефон*</label>
+        <label for="phone" class="order-modal-form-label">Телефон*</label>
         <div class="order-modal-input-div">
           <input
             type="tel"
@@ -23,6 +23,7 @@
             name="phone"
             class="order-modal-form-input"
             pattern="[0-9]{12}"
+            title="Введіть номер з 12 цифр"
             required
           />
         </div>

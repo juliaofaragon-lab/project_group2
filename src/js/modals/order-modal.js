@@ -40,12 +40,17 @@ form.addEventListener('submit', async (e) => {
     console.log('orderData :>> ', orderData);
     console.log(response.status);
     iziToast.show({
-      message: 'Успіх!',
+      message: `Ви замовили ${orderData.model}, номер замовлення ${orderData.orderNum}`,
       position: 'bottomRight', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
     });
     modal.classList.add('hidden');
     e.target.reset();
   } catch (error) {
+    iziToast.error({
+      title: 'Помилка',
+      message: 'Щось пішло не так...',
+      position: 'bottomRight',
+    });
     console.log(error.message);
   }
 });
