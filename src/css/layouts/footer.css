@@ -29,12 +29,26 @@
   margin-top: 24px;
   margin-bottom: 24px;
 }
+
+.socials-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 250ms ease;
+}
+
 .social-icon {
   fill: #fff;
+  transition: fill 250ms ease;
 }
-.social-icon:hover,
-.social-icon:focus {
+
+.socials-link:hover .social-icon,
+.socials-link:focus-visible .social-icon {
   fill: #080c09;
+}
+
+.socials-link:active {
+  transform: translateY(1px);
 }
 
 .footer-nav-list {
@@ -46,8 +60,12 @@
 }
 
 .footer-nav-link:hover,
-.footer-nav-link:focus {
+.footer-nav-link:focus-visible {
   color: #080c09;
+}
+
+.footer-nav-link:active {
+  color: #f6d3d4;
 }
 
 .footer-copy {

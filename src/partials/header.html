@@ -1,14 +1,21 @@
 <header class="header">
   <div class="header__container">
-    <a class="logo" href="/" aria-label="Логотип Меблерія">
+    <a class="logo" href="./index.html" aria-label="Логотип Меблерія">
       <svg class="logo__icon" width="157" height="35">
         <use href="./img/icons/sprite.svg#icon-logo-footer"></use>
       </svg>
     </a>
 
     <nav class="header__nav" data-mobile-menu>
-      <button class="menu-close-btn" type="button" data-close-mobile-menu>
-        <svg width="32" height="32"><use href="./img/icons/sprite.svg#icon-close-btn"></use></svg>
+      <button
+        class="menu-close-btn"
+        type="button"
+        data-close-mobile-menu
+        aria-label="Закрити меню"
+      >
+        <svg width="32" height="32">
+          <use href="./img/icons/sprite.svg#icon-close-btn"></use>
+        </svg>
       </button>
 
       <ul class="nav__list">
@@ -22,8 +29,10 @@
       </ul>
     </nav>
 
-    <button class="burger" type="button" data-open-mobile-menu>
-      <svg width="44" height="32"><use href="./img/icons/sprite.svg#icon-burger-btn"></use></svg>
+    <button class="burger" type="button" data-open-mobile-menu aria-label="Відкрити меню">
+      <svg width="44" height="32">
+        <use href="./img/icons/sprite.svg#icon-burger-btn"></use>
+      </svg>
     </button>
   </div>
 </header>

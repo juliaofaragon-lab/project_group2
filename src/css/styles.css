@@ -6,7 +6,11 @@
 @import url('./layouts/header.css');
 @import url('./layouts/hero.css');
 @import url('./layouts/furniture-list.css');
+@import url('./layouts/furniture-modal.css');
 @import url('./layouts/faq.css');
 @import url('./layouts/feedback.css');
+@import url('./layouts/order-modal.css');
 @import url('./layouts/footer.css');
+@import url('./layouts/order-modal.css');
+@import url('../css/about.css');
 @import url('./about.css');

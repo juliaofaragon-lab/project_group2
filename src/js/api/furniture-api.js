@@ -1,23 +1,32 @@
 import { request } from './http.js';
+import iziToast from 'izitoast';
 
-import axios from 'axios';
-axios.defaults.baseURL = 'https://furniture-store-v2.b.goit.study/api';
+export async function getFurnitureById(id) {
+  try {
+    return await request(`/furnitures/${id}`);
+  } catch (error) {
+    iziToast.error({
+      message: error instanceof Error ? error.message : 'Не вдалося завантажити дані про товар.',
+      position: 'bottomRight',
+    });
 
-export function getFurnitureById(id) {
-  return request(`/furnitures/${id}`);
-}
-
-export async function getCategories() {
-  const { data } = await axios('/categories');
-
-  return data;
-}
-
-export async function getProductsByCategory(category, page) {
-  if (category === 'all') {
-    const { data } = await axios(`/furnitures?limit=8&page=${page}`);
-    return data;
+    throw error;
   }
-  const { data } = await axios(`/furnitures?category=${category}&limit=8&page=${page}`);
-  return data;
+}
+
+export function getCategories() {
+  return request('/categories');
+}
+
+export function getProductsByCategory(category, page) {
+  const params = {
+    limit: 8,
+    page,
+  };
+
+  if (category !== 'all') {
+    params.category = category;
+  }
+
+  return request('/furnitures', { params });
 }

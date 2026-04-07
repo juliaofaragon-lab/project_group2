@@ -1,39 +1,72 @@
-# Project Group 2
+# Mebleriia
 
-Стартовий репозиторій для командного проєкту на `Vite` + `Vanilla JS`.
+Mebleriia is a responsive landing page for a furniture store. The project helps users browse furniture categories, view product cards, open a detailed furniture modal, and send an order request through a feedback form modal.
 
-## Що вже підготовлено
+## Tech Stack
 
-- структура папок під усі секції з окремими `html / css / js` файлами;
-- підключення HTML partials через `vite-plugin-html-inject`;
-- базові бібліотеки під вимоги ТЗ:
-  - `accordion-js` для FAQ;
-  - `swiper` для слайдерів;
-  - `izitoast` для push-повідомлень;
-  - `modern-normalize` для базового ресету;
-- налаштовані `ESLint` і `Prettier`;
-- готові скрипти для локальної розробки, білду й форматування.
+- HTML partials
+- CSS
+- JavaScript (ES modules)
+- Vite
+- Axios
+- accordion-js
+- iziToast
+- Swiper
+- ESLint
+- Prettier
 
-## Технології
+## Features
 
-- `Vite`
-- `HTML partials`
-- `CSS`
-- `Vanilla JavaScript (ES modules)`
-- `accordion-js`
-- `swiper`
-- `izitoast`
-- `ESLint`
-- `Prettier`
+- fixed header with anchor navigation
+- hero section with responsive background images
+- furniture list loaded from backend
+- category filtering and pagination by 8 items
+- furniture details modal with gallery, colors, rating, description, and dimensions
+- order modal with POST request to the backend
+- FAQ accordion
+- footer with anchor navigation and social links
 
-## Швидкий старт
+## Project Structure
+
+```text
+public/
+src/
+  css/
+    base/
+    layouts/
+  img/
+  js/
+    about/
+    api/
+    faq/
+    furniture/
+    header/
+    helpers/
+    modals/
+  partials/
+```
+
+## Getting Started
+
+1. Install dependencies:
 
 ```bash
 npm install
+```
+
+2. Create a local `.env` file in the project root and add:
+
+```env
+VITE_API_BASE_URL=https://furniture-store-v2.b.goit.study/api
+```
+
+3. Start the development server:
+
+```bash
 npm run dev
 ```
 
-## Корисні команди
+## Available Commands
 
 ```bash
 npm run dev
@@ -45,48 +78,19 @@ npm run format
 npm run format:check
 ```
 
-## Структура проєкту
+## Deployment
 
-```text
-public/
-src/
-  img/
-  js/
-    api/
-    helpers/
-    header/
-    hero/
-    furniture/
-    about/
-    faq/
-    feedback/
-    modals/
-  partials/
-  css/
-    base/
-    layouts/
+The production build is created with:
+
+```bash
+npm run build
 ```
 
-## Робота в команді
-
-- `main` тримай як стабільну гілку.
-- Під кожну секцію зручно створювати окрему гілку:
-  - `feature/header`
-  - `feature/hero`
-  - `feature/furniture`
-  - `feature/about`
-  - `feature/faq`
-  - `feature/feedback`
-  - `feature/modals`
-  - `feature/footer`
-- Кожен учасник працює переважно у своєму наборі файлів:
-  - `src/partials/<section>.html`
-  - `src/css/layouts/<section>.css`
-  - `src/js/<section>/<section>.js`
+The project uses Vite with the `--base=/project_group2/` build option for GitHub Pages deployment.
 
 ## API
 
-У репозиторії вже є заготовки для роботи з API:
+The project uses the Furniture Store API for:
 
 - `GET /categories`
 - `GET /furnitures`
@@ -94,8 +98,7 @@ src/
 - `GET /feedbacks`
 - `POST /orders`
 
-Для базової URL-адреси API використовуй змінну середовища:
+## Notes
 
-```env
-VITE_API_BASE_URL=https://furniture-store-v2.b.goit.study/api
-```
+- Feedback section integration is still pending.
+- Static content images use responsive sources where available.

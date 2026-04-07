@@ -93,7 +93,7 @@
 }
 
 /* desktop */
-@media (min-width: 1024px) {
+@media (min-width: 1440px) {
     .section-about {
         padding: 64px;
         align-items: center;

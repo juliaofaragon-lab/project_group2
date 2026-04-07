@@ -21,12 +21,21 @@
   border-radius: 0;
   color: #1f1f1f;
   background-color: transparent;
+  cursor: pointer;
+  transition:
+    color var(--transition-main),
+    background-color var(--transition-main),
+    transform var(--transition-main);
 }
 
 .furniture-modal__close:hover,
 .furniture-modal__close:focus-visible {
   color: #8d1017;
   background-color: rgba(141, 16, 23, 0.08);
+}
+
+.furniture-modal__close:active {
+  transform: translateY(1px);
 }
 
 .furniture-modal__close span {
@@ -78,6 +87,7 @@
     border-color var(--transition-main),
     transform var(--transition-main),
     box-shadow var(--transition-main);
+  cursor: pointer;
 }
 
 .furniture-modal__thumb:hover,
@@ -197,6 +207,7 @@
     border-color var(--transition-main),
     transform var(--transition-main),
     box-shadow var(--transition-main);
+  cursor: pointer;
 }
 
 .furniture-modal__color-option:hover,
@@ -244,11 +255,23 @@
   font-weight: 500;
   background-color: #6b0609;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition:
+    background-color var(--transition-main),
+    box-shadow var(--transition-main),
+    transform var(--transition-main);
 }
 
 .furniture-modal__action.button:hover,
-.furniture-modal__action.button:focus {
+.furniture-modal__action.button:focus-visible {
   background-color: #560507;
+  box-shadow:
+    0 8px 20px rgba(107, 6, 9, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.furniture-modal__action.button:active {
+  background-color: #480406;
+  transform: translateY(1px);
 }
 
 .furniture-modal__action.button:disabled {

@@ -5,21 +5,18 @@ html {
 body {
   margin: 0;
   padding: 0;
+  padding-top: 72px;
   font-family: 'Raleway', sans-serif;
-  padding-top: 72px; /* Компенсація висоти хедера */
 }
 
-/* --- Хедер --- */
 .header {
-  width: 100%;
-  height: 72px;
-  background: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  height: 72px;
+  background-color: #ffffff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -28,204 +25,212 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 64px;
-  position: relative;
-  height: 100%;
-  box-sizing: border-box;
+  padding: 0 20px;
 }
 
-/* --- Універсальний стиль кнопки --- */
-.btn-to-cart {
+.logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.logo__icon {
+  display: block;
+}
+
+.burger,
+.menu-close-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #6b0609 !important;
-  color: #ffffff !important;
-  border-radius: 100px;
-  text-decoration: none;
-  height: 42px;
-  padding: 0 24px;
-  font-weight: 500;
+  padding: 0;
   border: none;
+  background: transparent;
+  color: #080c09;
   cursor: pointer;
-  box-sizing: border-box;
   transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease;
-
-  /* Твоя тінь: X=0, Y=4, Blur=4, Color=Black 25% */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color 250ms ease,
+    opacity 250ms ease,
+    transform 250ms ease;
 }
 
-.btn-to-cart:hover {
-  background-color: #8a0a0d !important;
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); /* Посилення тіні при наведенні */
+.burger:hover,
+.burger:focus-visible,
+.menu-close-btn:hover,
+.menu-close-btn:focus-visible {
+  color: #6b0609;
 }
 
-/* --- Десктоп Навігація (від 993px) --- */
+.burger:active,
+.menu-close-btn:active {
+  transform: translateY(1px);
+}
+
+.menu-close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  display: none;
+}
+
+.header.is-open .burger {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.header.is-open .menu-close-btn {
+  display: inline-flex;
+}
+
+.header__nav {
+  position: fixed;
+  top: 72px;
+  right: 0;
+  z-index: 1050;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 72px);
+  padding: 32px 20px;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header__nav.active {
+  display: flex;
+}
+
 .nav__list {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 32px;
-  list-style: none;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
 .nav__link {
-  text-decoration: none;
-  color: #0a0a0a;
+  display: inline-flex;
   font-weight: 500;
-  transition: color 0.3s;
+  line-height: 1.6;
+  color: #080c09;
+  transition:
+    color 250ms ease,
+    transform 250ms ease;
 }
 
-.nav__link:hover {
+.nav__link:hover,
+.nav__link:focus-visible {
   color: #6b0609;
 }
 
-/* --- Мобільні стилі (Загальні < 992px) --- */
-@media (max-width: 992px) {
-  .header__container {
-    padding: 0 20px;
-  }
-
-  .burger,
-  .menu-close-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1100;
-  }
-
-  .menu-close-btn {
-    display: none;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-  }
-
-  .header.is-open .burger {
-    display: none;
-  }
-  .header.is-open .menu-close-btn {
-    display: block;
-  }
-
-  .header__nav {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #ffffff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    display: none;
-    flex-direction: column;
-    z-index: 1050;
-    gap: 32px;
-    box-sizing: border-box;
-  }
-
-  .header__nav.active {
-    display: flex !important;
-  }
-
-  .nav__list {
-    flex-direction: column;
-    gap: 32px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+.nav__link:active {
+  color: #560507;
+  transform: translateY(1px);
 }
 
-/* --- 1. Специфікація для мобілок (до 767px, зокрема 375px) --- */
+.btn-to-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 168px;
+  height: 42px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 100px;
+  color: #ffffff;
+  background-color: #6b0609;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition:
+    background-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+}
+
+.btn-to-cart:hover,
+.btn-to-cart:focus-visible {
+  background-color: #8a0a0d;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-to-cart:active {
+  background-color: #560507;
+  transform: translateY(1px);
+}
+
 @media (max-width: 767px) {
-  .header__nav {
-    position: fixed !important;
-    top: 72px !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: calc(100vh - 72px) !important;
-
-    justify-content: flex-start !important;
-    align-items: center !important;
-
-    /* Паддінг зверху рівно 32px за ТЗ */
-    padding: 32px 20px !important;
-    gap: 32px !important;
-    z-index: 1050;
-  }
-
-  .nav__list {
-    align-items: center !important;
-    margin: 0 !important;
-  }
-
-  .nav__link {
-    font-size: 18px;
-    text-align: center;
-  }
-
-  .nav__item.faq {
-    display: block !important;
-  }
-
   .btn-to-cart {
-    width: 335px !important;
-    max-width: 90vw;
+    width: min(100%, 335px);
   }
 }
 
-/* --- 2. Специфікація для 768px - 899px --- */
-@media (min-width: 768px) and (max-width: 899px) {
+@media (min-width: 768px) and (max-width: 1439px) {
+  .header__container {
+    padding: 0 32px;
+  }
+
   .header__nav {
-    width: 249px;
-    height: 334px;
+    width: 320px;
     padding: 24px 32px;
     align-items: flex-end;
   }
-  .nav__list {
-    align-items: flex-end;
-  }
-  .btn-to-cart {
-    width: 185px !important;
-  }
-}
 
-/* --- 3. Специфікація для 900px - 992px --- */
-@media (min-width: 900px) and (max-width: 992px) {
-  .header__nav {
-    width: 298px !important;
-    height: 276px !important;
-    /* Паддінги: верх/низ 24, право 98, ліво 25 */
-    padding: 24px 98px 24px 25px !important;
-    align-items: flex-end;
-  }
   .nav__list {
     align-items: flex-end;
   }
+
   .nav__link {
-    font-size: 18px !important;
+    text-align: right;
   }
-  .nav__item.faq {
-    display: none !important;
-  }
+
   .btn-to-cart {
-    width: 175px !important;
+    width: 185px;
   }
 }
 
-/* Приховування кнопок на десктопі */
-@media (min-width: 993px) {
+@media (min-width: 1440px) {
+  .header__container {
+    padding: 0 64px;
+  }
+
   .burger,
   .menu-close-btn {
     display: none !important;
   }
+
+  .header__nav {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .nav__list {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    width: auto;
+  }
+
+  .nav__link {
+    text-align: left;
+  }
+
+  .btn-to-cart {
+    width: auto;
+  }
 }
 
-/* Блокування скролу */
 body.is-scroll-locked {
   overflow: hidden;
   touch-action: none;

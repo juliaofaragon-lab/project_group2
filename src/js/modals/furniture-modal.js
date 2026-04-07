@@ -5,6 +5,7 @@ import demoThumbTwo from '../../img/furniture-modal/sofa-oslo-thumb-2.webp';
 import { getFurnitureById } from '../api/furniture-api.js';
 import { lockScroll, unlockScroll } from '../helpers/scroll-lock.js';
 import { refs } from '../helpers/refs.js';
+import { openOrderModal } from './order-modal.js';
 
 const state = {
   activeImageIndex: 0,
@@ -238,14 +239,33 @@ function normalizeFurnitureItem(item = {}) {
 function syncOrderActionButton() {
   const { actionButton } = getModalElements();
 
-  if (!actionButton || !state.item) {
+  if (!actionButton) {
     return;
   }
 
-  delete actionButton.dataset.orderModelId;
-  delete actionButton.dataset.orderModelName;
-  delete actionButton.dataset.orderColor;
-  actionButton.disabled = true;
+  const selectedColor = state.item?.colors?.[state.activeColorIndex] ?? null;
+
+  if (!state.item?.id) {
+    delete actionButton.dataset.orderColor;
+    delete actionButton.dataset.orderColorLabel;
+    delete actionButton.dataset.orderModelId;
+    delete actionButton.dataset.orderModelName;
+    actionButton.disabled = true;
+    return;
+  }
+
+  actionButton.dataset.orderModelId = state.item.id;
+  actionButton.dataset.orderModelName = state.item.name;
+
+  if (selectedColor) {
+    actionButton.dataset.orderColor = selectedColor.value;
+    actionButton.dataset.orderColorLabel = selectedColor.label;
+  } else {
+    delete actionButton.dataset.orderColor;
+    delete actionButton.dataset.orderColorLabel;
+  }
+
+  actionButton.disabled = false;
 }
 
 function renderStars(rating) {
@@ -314,8 +334,7 @@ function renderColors() {
           >
             <input
               class="visually-hidden furniture-modal__color-input"
-              type="radio"
-              name="furniture-modal-color"
+              type="checkbox"
               data-modal-color="${index}"
               ${index === state.activeColorIndex ? 'checked' : ''}
             />
@@ -461,6 +480,7 @@ function resetFurnitureModal() {
 
   if (actionButton) {
     delete actionButton.dataset.orderColor;
+    delete actionButton.dataset.orderColorLabel;
     delete actionButton.dataset.orderModelId;
     delete actionButton.dataset.orderModelName;
     actionButton.disabled = true;
@@ -487,15 +507,17 @@ function openFurnitureModal(trigger = null) {
   });
 }
 
-function closeFurnitureModal() {
+export function closeFurnitureModal(options = {}) {
   if (!refs.furnitureModal) {
     return;
   }
 
+  const { restoreFocus = true } = options;
+
   refs.furnitureModal.hidden = true;
   unlockScroll();
 
-  if (state.lastTrigger instanceof HTMLElement) {
+  if (restoreFocus && state.lastTrigger instanceof HTMLElement) {
     state.lastTrigger.focus();
   }
 }
@@ -541,6 +563,7 @@ export function initFurnitureModal(options = {}) {
   document.addEventListener('click', async (event) => {
     const openButton = event.target.closest('[data-open-furniture-modal]');
     const closeButton = event.target.closest('[data-close-furniture-modal]');
+    const orderButton = event.target.closest('.js-furniture-modal-order-button');
     const thumbButton = event.target.closest('[data-modal-thumb]');
 
     if (openButton) {
@@ -551,6 +574,18 @@ export function initFurnitureModal(options = {}) {
 
     if (closeButton || event.target === refs.furnitureModal) {
       closeFurnitureModal();
+      return;
+    }
+
+    if (orderButton && refs.furnitureModal.contains(orderButton) && state.item) {
+      closeFurnitureModal({ restoreFocus: false });
+      openOrderModal({
+        color: orderButton.dataset.orderColor ?? '',
+        colorLabel: orderButton.dataset.orderColorLabel ?? '',
+        modelId: orderButton.dataset.orderModelId ?? state.item.id,
+        modelName: orderButton.dataset.orderModelName ?? state.item.name,
+        returnFocusTo: state.lastTrigger,
+      });
       return;
     }
 
