@@ -1,57 +1,47 @@
-<div class="backdrop modal-backdrop js-order-modal" hidden>
-  <div class="modal order-modal" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
-    <button
-      class="modal__close order-modal__close"
-      type="button"
-      data-close-order-modal
-      aria-label="Закрити модальне вікно"
-    >
-      <span aria-hidden="true">&times;</span>
+<link rel="stylesheet" href="../css/modal.css" />
+<div class="order-modal">
+  <div class="order-modal-window">
+    <button class="order-modal-button-close" type="button">
+      <svg class="order-modal-svg-close" width="16" height="16">
+        <use href="../img/icons/sprite.svg#icon-close-btn"></use>
+      </svg>
     </button>
-
-    <div class="order-modal__content">
-      <div class="order-modal__heading">
-        <h2 class="order-modal__title" id="order-modal-title">Замовити зворотний зв'язок</h2>
-        <p class="order-modal__summary js-order-modal-summary" hidden></p>
+    <h2 class="order-modal-h2">Замовити</h2>
+    <form class="order-form">
+      <div class="order-modal-form">
+        <label for="name" class="order-modal-form-label">Ім'я*</label>
+        <div class="order-modal-input-div">
+          <input type="text" id="name" name="name" class="order-modal-form-input" required />
+        </div>
+      </div>
+      <div class="order-modal-form">
+        <label for="phone" class="order-modal-form-label">Телефон*</label>
+        <div class="order-modal-input-div">
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="order-modal-form-input"
+            pattern="[0-9]{12}"
+            title="Введіть номер з 12 цифр"
+            required
+          />
+        </div>
       </div>
 
-      <form class="order-form js-order-form">
-        <label class="order-modal__field">
-          <span class="order-modal__label">Ім'я*</span>
-          <input
-            class="order-modal__input"
-            type="text"
-            name="name"
-            autocomplete="name"
-            required
-          />
-        </label>
+      <div class="order-modal-comment">
+        <label for="user-comment" class="order-modal-form-label">Коментар</label>
+        <textarea
+          name="comment"
+          id="comment"
+          placeholder="Введіть ваш коментар"
+          class="order-modal-textarea"
+        ></textarea>
+      </div>
 
-        <label class="order-modal__field">
-          <span class="order-modal__label">Телефон*</span>
-          <input
-            class="order-modal__input"
-            type="tel"
-            name="phone"
-            autocomplete="tel"
-            placeholder="+380XXXXXXXXX"
-            required
-          />
-        </label>
-
-        <label class="order-modal__field">
-          <span class="order-modal__label">Коментар</span>
-          <textarea
-            class="order-modal__textarea"
-            name="comment"
-            placeholder="Введіть ваш коментар"
-          ></textarea>
-        </label>
-
-        <p class="order-modal__state js-order-modal-state" hidden></p>
-
-        <button class="button order-modal__submit" type="submit">Надіслати заявку</button>
-      </form>
-    </div>
+      <button class="order-modal-form-button">Надіслати заявку</button>
+    </form>
   </div>
 </div>
+
+<script type="module" src="../js/modals/order-modal.js"></script>
