@@ -27,6 +27,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     text-align: start;
     width: 100%;
     padding: 20px 0;
@@ -41,6 +42,19 @@
     display: flex !important;
 }
 
+.faq__btn.ac-trigger::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin-left: 24px;
+    flex-shrink: 0;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.25s ease;
+}
+
 .faq__btn:hover {
     cursor: pointer;
 }
@@ -50,14 +64,7 @@
 }
 
 .faq__icon {
-    margin-left: 24px;
-    flex-shrink: 0;
-    transition: transform 0.25s ease;
-    width: 32px;
-    height: 32px;
-    align-self: center;
-    color: #080c09;
-    display: block;
+    display: none;
 }
 
 .ac {
@@ -75,12 +82,8 @@
     padding-bottom: 24px;
 }
 
-.is-active .faq__icon {
-    transform: rotate(180deg);
-}
-
-.ac-trigger::after {
-    display: none !important;
+.is-active .faq__btn.ac-trigger::after {
+    transform: rotate(-135deg);
 }
 
 /* Styles for Tablet devices */
