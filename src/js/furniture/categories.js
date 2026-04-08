@@ -1,7 +1,13 @@
 import iziToast from 'izitoast';
 
 import { getCategories, getProductsByCategory } from '../api/furniture-api.js';
-import { hideLoader, renderProductsByCategory, showLoader } from './furniture-list.js';
+import {
+  hideLoadMoreBtn,
+  hideLoader,
+  renderProductsByCategory,
+  showLoadMoreBtn,
+  showLoader,
+} from './furniture-list.js';
 
 const categoryList = document.querySelector('.category-list-furniture');
 
@@ -130,12 +136,22 @@ export async function handlerSelectCategory(event) {
   categoryItem.classList.add('selected-category');
   currentCategory = categoryButton.dataset.categoryId ?? 'all';
 
+  const loadMoreButton = document.querySelector('.btn-loadmore-furniture');
+  const wasLoadMoreVisible = Boolean(
+    loadMoreButton && !loadMoreButton.classList.contains('visually-hidden')
+  );
+
+  hideLoadMoreBtn();
   showLoader();
 
   try {
     const products = await getProductsByCategory(currentCategory, 1);
     renderProductsByCategory(products);
   } catch (error) {
+    if (wasLoadMoreVisible) {
+      showLoadMoreBtn();
+    }
+
     showErrorToast(
       error instanceof Error ? error.message : 'Не вдалося відфільтрувати меблі за категорією.'
     );

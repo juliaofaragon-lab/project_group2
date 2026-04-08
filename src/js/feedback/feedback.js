@@ -13,6 +13,7 @@ let feedbackSwiper = null;
 
 function getElements() {
   return {
+    footer: document.querySelector('.feedback__footer'),
     list: document.querySelector('.js-feedback-list'),
     loader: document.querySelector('.js-feedback-loader'),
     nextButton: document.querySelector('.js-feedback-next'),
@@ -32,6 +33,16 @@ function showLoader() {
 function hideLoader() {
   const { loader } = getElements();
   loader?.classList.add('visually-hidden');
+}
+
+function setFooterVisible(isVisible) {
+  const { footer } = getElements();
+
+  if (!footer) {
+    return;
+  }
+
+  footer.hidden = !isVisible;
 }
 
 function renderState(message = '') {
@@ -156,6 +167,7 @@ export async function initFeedback() {
     return;
   }
 
+  setFooterVisible(false);
   showLoader();
   renderState();
 
@@ -166,7 +178,9 @@ export async function initFeedback() {
     initRatings();
     renderPagination(feedbacks.length);
     initSlider();
+    setFooterVisible(feedbacks.length > 0);
   } catch (error) {
+    setFooterVisible(false);
     const message = error instanceof Error ? error.message : 'Не вдалося завантажити відгуки.';
 
     renderState(message);
