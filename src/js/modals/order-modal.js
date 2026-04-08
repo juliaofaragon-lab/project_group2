@@ -194,13 +194,17 @@ async function handleOrderSubmit(event) {
   }
 
   const formData = new FormData(event.currentTarget);
+  const comment = String(formData.get('comment') ?? '').trim();
   const payload = {
     color: state.color,
-    comment: String(formData.get('comment') ?? '').trim(),
     modelId: state.modelId,
     name: String(formData.get('name') ?? '').trim(),
     phone: normalizePhone(formData.get('phone')),
   };
+
+  if (comment) {
+    payload.comment = comment;
+  }
 
   const validationMessage = validateOrderPayload(payload);
 

@@ -41,18 +41,22 @@ function showErrorToast(message) {
   });
 }
 
+function updateLoadMoreVisibility({ totalItems = 0, page = 1, limit = 0 } = {}) {
+  if (totalItems <= page * limit) {
+    hideLoadMoreBtn();
+    return;
+  }
+
+  showLoadMoreBtn();
+}
+
 export function renderProductsByCategory(data) {
   if (!productsList) {
     return;
   }
 
   currentPage = 1;
-  showLoadMoreBtn();
-
-  if (data.totalItems <= data.page * data.limit) {
-    hideLoadMoreBtn();
-  }
-
+  updateLoadMoreVisibility(data);
   productsList.innerHTML = data.furnitures.map(buildProductMarkup).join('');
 }
 
@@ -62,16 +66,11 @@ export async function initProducts() {
   }
 
   currentPage = 1;
-  showLoadMoreBtn();
+  hideLoadMoreBtn();
   showLoader();
 
   try {
     const products = await getProductsByCategory(currentCategory, currentPage);
-
-    if (products.totalItems <= products.page * products.limit) {
-      hideLoadMoreBtn();
-    }
-
     renderProductsByCategory(products);
   } catch (error) {
     hideLoadMoreBtn();
@@ -109,19 +108,23 @@ export async function handlerLoadMoreBtn() {
     return;
   }
 
+  const wasLoadMoreVisible = !loadMoreBtn?.classList.contains('visually-hidden');
+
   currentPage += 1;
+  hideLoadMoreBtn();
   showLoader();
 
   try {
     const data = await getProductsByCategory(currentCategory, currentPage);
-
-    if (data.totalItems <= data.page * data.limit) {
-      hideLoadMoreBtn();
-    }
-
     productsList.insertAdjacentHTML('beforeend', data.furnitures.map(buildProductMarkup).join(''));
+    updateLoadMoreVisibility(data);
   } catch (error) {
     currentPage -= 1;
+
+    if (wasLoadMoreVisible) {
+      showLoadMoreBtn();
+    }
+
     showErrorToast(
       error instanceof Error
         ? error.message

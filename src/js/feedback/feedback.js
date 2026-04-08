@@ -41,7 +41,16 @@ function hideLoader() {
 
 function setFooterVisible(isVisible) {
   const { footer } = getElements();
+<<<<<<< my-branch
   if (footer) footer.hidden = !isVisible;
+=======
+
+  if (!footer) {
+    return;
+  }
+
+  footer.hidden = !isVisible;
+>>>>>>> main
 }
 
 function renderState(message = '') {
@@ -138,7 +147,11 @@ export async function initFeedback() {
     list.innerHTML = createFeedbackMarkup(feedbacks);
     initRatings();
     initSlider();
+<<<<<<< my-branch
     setFooterVisible(true);
+=======
+    setFooterVisible(feedbacks.length > 0);
+>>>>>>> main
   } catch (error) {
     setFooterVisible(false);
     const message = error instanceof Error ? error.message : 'Не вдалося завантажити відгуки.';
