@@ -14,12 +14,23 @@
 }
 
 .faq__list {
-    border-bottom: 1px solid rgba(8, 12, 9, 0.15);
+    border-top: 1px solid rgba(8, 12, 9, 0.15);
 }
 
 .faq__item {
+    position: relative;
     transition: background-color 300ms ease;
-    border-top: 1px solid rgba(8, 12, 9, 0.15) !important;
+}
+
+.faq__item::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background-color: rgba(8, 12, 9, 0.15);
+    pointer-events: none;
 }
 
 .faq-wraper {
