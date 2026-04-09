@@ -38,6 +38,9 @@
   aspect-ratio: 335 / 277;
   object-fit: cover;
   margin-bottom: 16px;
+  transition:
+    transform var(--transition-main),
+    filter var(--transition-main);
 }
 .product-info {
   display: flex;
@@ -53,6 +56,7 @@
   font-size: 18px;
   line-height: 160%;
   color: #080c09;
+  transition: color var(--transition-main);
 }
 .product-colors-list {
   display: flex;
@@ -70,6 +74,7 @@
   font-size: 20px;
   line-height: 160%;
   color: #080c09;
+  transition: color var(--transition-main);
 }
 .btn-loadmore-furniture {
   box-shadow:
@@ -238,6 +243,54 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 246, 242, 0.92) 100%);
+  transition:
+    transform var(--transition-main),
+    box-shadow var(--transition-main),
+    border-color var(--transition-main),
+    background-color var(--transition-main);
+}
+
+@media (hover: hover) {
+  .product-item:hover {
+    transform: translateY(-6px);
+    border-color: rgba(107, 6, 9, 0.12);
+    box-shadow:
+      0 18px 34px rgba(8, 12, 9, 0.1),
+      0 6px 14px rgba(107, 6, 9, 0.08);
+  }
+
+  .product-item:hover .product-img {
+    transform: scale(1.03);
+    filter: saturate(1.05);
+  }
+
+  .product-item:hover .product-title,
+  .product-item:hover .product-price {
+    color: #6b0609;
+  }
+}
+
+.product-item:focus-within {
+  transform: translateY(-6px);
+  border-color: rgba(107, 6, 9, 0.12);
+  box-shadow:
+    0 18px 34px rgba(8, 12, 9, 0.1),
+    0 6px 14px rgba(107, 6, 9, 0.08);
+}
+
+.product-item:focus-within .product-img {
+  transform: scale(1.03);
+  filter: saturate(1.05);
+}
+
+.product-item:focus-within .product-title,
+.product-item:focus-within .product-price {
+  color: #6b0609;
 }
 
 /* tablet */
